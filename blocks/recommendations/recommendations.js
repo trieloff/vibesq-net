@@ -57,45 +57,62 @@ async function streamInto(targetElement, url) {
       throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
     }
 
-    // Create a container for the streamed content
-    const streamContainer = document.createElement('main');
-    streamContainer.classList.add('streamed-recommendations');
-    streamContainer.classList.add('pseudo-main');
-
-    // Insert the container before the target element
-    targetElement.parentNode.insertBefore(streamContainer, targetElement);
-
     const decoder = new TextDecoder();
+    const domParser = new DOMParser();
 
     // Check if ReadableStream is supported and response body is available
     if (res.body) {
       const reader = res.body.getReader();
-
-      // Process all chunks sequentially
+      let buffer = '';
       let result;
       do {
         // eslint-disable-next-line no-await-in-loop
         result = await reader.read();
         if (!result.done) {
-          // Decode and insert the chunk
-          const chunkText = decoder.decode(result.value, { stream: true });
-          streamContainer.insertAdjacentHTML('beforeend', chunkText);
+          // Decode and buffer the chunk
+          buffer += decoder.decode(result.value, { stream: true });
 
-          decorateMain(streamContainer);
-          // eslint-disable-next-line no-await-in-loop
-          await loadSections(streamContainer);
+          // Try to parse and insert only complete HTML elements
+          // We'll use a temporary wrapper to parse as a fragment
+          let lastOpenTag = buffer.lastIndexOf('<');
+          let lastCloseTag = buffer.lastIndexOf('>');
+          // Only parse up to the last complete tag
+          let parseUpTo = lastCloseTag > lastOpenTag ? buffer.length : lastCloseTag + 1;
+          if (parseUpTo > 0) {
+            const htmlToParse = buffer.slice(0, parseUpTo);
+            const doc = domParser.parseFromString(htmlToParse, 'text/html');
+            // Insert all child nodes of body
+            Array.from(doc.body.childNodes).forEach((node) => {
+              targetElement.parentNode.insertBefore(node, targetElement);
+            });
+            if (targetElement.parentNode.querySelector('main')) {
+              decorateMain(targetElement.parentNode.querySelector('main'));
+              await loadSections(targetElement.parentNode.querySelector('main'));
+            }
+            // Keep the rest in the buffer
+            buffer = buffer.slice(parseUpTo);
+          }
         }
       } while (!result.done);
 
-      // Flush the decoder
-      streamContainer.insertAdjacentHTML('beforeend', decoder.decode());
+      // Flush the decoder and parse any remaining buffer
+      buffer += decoder.decode();
+      if (buffer.trim()) {
+        const doc = domParser.parseFromString(buffer, 'text/html');
+        Array.from(doc.body.childNodes).forEach((node) => {
+          targetElement.parentNode.insertBefore(node, targetElement);
+        });
+      }
     } else {
       // Fallback for browsers that don't support streaming
       const text = await res.text();
-      streamContainer.insertAdjacentHTML('beforeend', text);
+      const doc = domParser.parseFromString(text, 'text/html');
+      Array.from(doc.body.childNodes).forEach((node) => {
+        targetElement.parentNode.insertBefore(node, targetElement);
+      });
     }
 
-    return streamContainer;
+    return targetElement;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error streaming content:', error);
