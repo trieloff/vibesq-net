@@ -32,7 +32,7 @@ div.status h2 {
 
 /* Cyberpunk glitch animation when status is in the last status div */
 .status:last-of-type {
-  animation: cyberpunk-glitch 0.8s infinite;
+  animation: cyberpunk-glitch 0.8s 3;
 }
 
 @keyframes cyberpunk-glitch {
