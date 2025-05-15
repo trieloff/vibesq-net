@@ -112,9 +112,7 @@ export function decorateMain(main) {
   main.querySelectorAll('.section').forEach((section) => {
     // Check if this section contains a recommendations block
     const hasRecommendations = section.querySelector('.recommendations');
-    if (!hasRecommendations) {
-      section.setAttribute('box-', 'square');
-    }
+    section.setAttribute('box-', 'square');
   });
   decorateBlocks(main);
   // Add box attribute to all blocks
