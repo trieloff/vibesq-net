@@ -1,4 +1,3 @@
-
 import {
   decorateBlock,
   loadBlock,
@@ -63,11 +62,30 @@ async function streamInto(targetElement, url) {
       const reader = res.body.getReader();
       let buffer = '';
       let result;
-      const pseudoMain = document.createElement('main');
-      const pseudoSection = document.createElement('div');
-      pseudoSection.classList.add('section');
-      pseudoMain.appendChild(pseudoSection);
-      targetElement.parentNode.insertBefore(pseudoMain, targetElement);
+
+      // Create main container if it doesn't exist yet, or use existing one for appending
+      let pseudoMain, pseudoSection;
+      const existingMain = targetElement.parentNode.querySelector('main');
+
+      if (existingMain) {
+        // Use existing containers for appending
+        pseudoMain = existingMain;
+        pseudoSection = existingMain.querySelector('.section');
+
+        // Add a visual separator if we're appending to existing content
+        const separator = document.createElement('div');
+        separator.classList.add('continuation-separator');
+        separator.innerHTML = '<hr><div class="status"><h2>Follow-up Response</h2><p>Additional recommendations based on your request:</p></div>';
+        pseudoSection.appendChild(separator);
+      } else {
+        // Create new containers for initial content
+        pseudoMain = document.createElement('main');
+        pseudoSection = document.createElement('div');
+        pseudoSection.classList.add('section');
+        pseudoMain.appendChild(pseudoSection);
+        targetElement.parentNode.insertBefore(pseudoMain, targetElement);
+      }
+
       do {
         // eslint-disable-next-line no-await-in-loop
         result = await reader.read();
@@ -108,6 +126,67 @@ async function streamInto(targetElement, url) {
           pseudoSection.appendChild(node);
         });
       }
+
+      // Add event listeners to any continuation links and follow-up demand buttons
+      // This function handles both session continuation links and demand buttons
+      function setupContinuationLinks() {
+        // Find all continuation links (normal and demand buttons)
+        const continuationLinks = pseudoSection.querySelectorAll('a[href*="session="]');
+
+        continuationLinks.forEach((link) => {
+          // Remove any existing listeners to avoid duplicates
+          link.removeEventListener('click', handleContinuationClick);
+          // Add the click handler
+          link.addEventListener('click', handleContinuationClick);
+        });
+      }
+
+      // Handle clicks on continuation links and demand buttons
+      async function handleContinuationClick(e) {
+        e.preventDefault();
+        const href = e.currentTarget.getAttribute('href');
+        const url = new URL(href, window.location.href);
+
+        // Get the session ID for potential future use
+        const sessionId = url.searchParams.get('session');
+        if (sessionId) {
+          localStorage.setItem('vibesquare_session_id', sessionId);
+        }
+
+        try {
+          // Show a loading indicator
+          const loadingIndicator = document.createElement('div');
+          loadingIndicator.classList.add('status', 'loading-indicator');
+          loadingIndicator.innerHTML = '<h2>Loading</h2><p>Processing your request...</p>';
+          pseudoSection.appendChild(loadingIndicator);
+
+          // Scroll to show the loading indicator
+          loadingIndicator.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+          // Stream the new content and append it to the existing page
+          await streamInto(targetElement, href);
+
+          // Remove the loading indicator
+          loadingIndicator.remove();
+        } catch (error) {
+          console.error('Error streaming follow-up content:', error);
+
+          // Show error message
+          const errorEl = document.createElement('div');
+          errorEl.classList.add('status', 'error');
+          errorEl.innerHTML = `<h2>Error</h2><p>Failed to load follow-up content: ${error.message}</p>`;
+          pseudoSection.appendChild(errorEl);
+        }
+      }
+
+      // Apply the event listeners
+      setupContinuationLinks();
+
+      // Find all buttons within the demand options and style them
+      const demandButtons = pseudoSection.querySelectorAll('.demand-button');
+      demandButtons.forEach(button => {
+        button.classList.add('styled-demand-button');
+      });
     } else {
       // this does not work and is not supported
     }
@@ -199,8 +278,18 @@ export default function decorate(block) {
       // Get the latitude and longitude
       const { latitude, longitude } = position.coords;
 
+      // Check if we have a session ID in localStorage from a previous visit
+      const sessionId = localStorage.getItem('vibesquare_session_id');
+
       // Construct the URL with coordinates
-      const url = `/recommendations.html?lat=${latitude}&lon=${longitude}`;
+      let url = `/recommendations.html?lat=${latitude}&lon=${longitude}`;
+
+      // If we have a session ID, append it to continue the conversation
+      if (sessionId) {
+        url += `&session=${sessionId}`;
+        // Clear the session ID from localStorage to prevent reusing it unintentionally
+        localStorage.removeItem('vibesquare_session_id');
+      }
 
       try {
         // Stream the content into the page
