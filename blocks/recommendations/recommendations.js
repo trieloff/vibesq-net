@@ -1,9 +1,7 @@
-import {
-  decorateMain,
-} from '../../scripts/scripts.js';
 
 import {
-  loadSections,
+  decorateBlock,
+  loadBlock,
 } from '../../scripts/aem.js';
 
 /**
@@ -65,6 +63,11 @@ async function streamInto(targetElement, url) {
       const reader = res.body.getReader();
       let buffer = '';
       let result;
+      const pseudoMain = document.createElement('main');
+      const pseudoSection = document.createElement('div');
+      pseudoSection.classList.add('section');
+      pseudoMain.appendChild(pseudoSection);
+      targetElement.parentNode.insertBefore(pseudoMain, targetElement);
       do {
         // eslint-disable-next-line no-await-in-loop
         result = await reader.read();
@@ -80,15 +83,17 @@ async function streamInto(targetElement, url) {
           let parseUpTo = lastCloseTag > lastOpenTag ? buffer.length : lastCloseTag + 1;
           if (parseUpTo > 0) {
             const htmlToParse = buffer.slice(0, parseUpTo);
+
             const doc = domParser.parseFromString(htmlToParse, 'text/html');
             // Insert all child nodes of body
             Array.from(doc.body.childNodes).forEach((node) => {
-              targetElement.parentNode.insertBefore(node, targetElement);
+              pseudoSection.appendChild(node);
+              if (node.tagName === 'DIV') {
+                decorateBlock(node);
+                loadBlock(node);
+              }
             });
-            if (targetElement.parentNode.querySelector('main')) {
-              decorateMain(targetElement.parentNode.querySelector('main'));
-              await loadSections(targetElement.parentNode.querySelector('main'));
-            }
+
             // Keep the rest in the buffer
             buffer = buffer.slice(parseUpTo);
           }
@@ -100,16 +105,11 @@ async function streamInto(targetElement, url) {
       if (buffer.trim()) {
         const doc = domParser.parseFromString(buffer, 'text/html');
         Array.from(doc.body.childNodes).forEach((node) => {
-          targetElement.parentNode.insertBefore(node, targetElement);
+          pseudoSection.appendChild(node);
         });
       }
     } else {
-      // Fallback for browsers that don't support streaming
-      const text = await res.text();
-      const doc = domParser.parseFromString(text, 'text/html');
-      Array.from(doc.body.childNodes).forEach((node) => {
-        targetElement.parentNode.insertBefore(node, targetElement);
-      });
+      // this does not work and is not supported
     }
 
     return targetElement;

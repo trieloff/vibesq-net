@@ -8,13 +8,30 @@ div.status h2 {
 }
 
 /* Status element styling */
-.status-wrapper {
+.status {
   opacity: 0.5;
   transition: opacity 0.2s ease;
 }
 
+/* Styling for .status elements that are not the last one, to fade out and disappear */
+.status:not(:last-of-type) {
+  animation: fade-out 2s forwards;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 0.5;
+    display: block;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+
 /* Cyberpunk glitch animation when status is in the last status div */
-.status-wrapper:last-of-type {
+.status:last-of-type {
   animation: cyberpunk-glitch 0.8s infinite;
 }
 
