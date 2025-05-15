@@ -108,9 +108,13 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
-  // Add box attribute to all sections
+  // Add box attribute to all sections except those containing recommendations block
   main.querySelectorAll('.section').forEach((section) => {
-    section.setAttribute('box-', 'square');
+    // Check if this section contains a recommendations block
+    const hasRecommendations = section.querySelector('.recommendations');
+    if (!hasRecommendations) {
+      section.setAttribute('box-', 'square');
+    }
   });
   decorateBlocks(main);
   // Add box attribute to all blocks

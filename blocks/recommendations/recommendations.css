@@ -36,3 +36,72 @@
   6% { opacity: 0; }
   100% { opacity: 0; }
 }
+
+/* Status element styling */
+.status {
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+/* Cyberpunk glitch animation when status is in the last child container */
+:last-child > .status {
+  animation: cyberpunk-glitch 0.8s infinite;
+}
+
+@keyframes cyberpunk-glitch {
+  0% {
+    opacity: 1;
+    filter: hue-rotate(0deg) saturate(100%);
+    color: var(--red);
+  }
+  10% {
+    opacity: 0.3;
+    filter: hue-rotate(180deg) saturate(150%);
+    color: var(--sky);
+  }
+  20% {
+    opacity: 1;
+    filter: hue-rotate(45deg) saturate(200%);
+    color: var(--green);
+  }
+  30% {
+    opacity: 0.8;
+    filter: hue-rotate(270deg) saturate(120%);
+    color: var(--yellow);
+  }
+  40% {
+    opacity: 0.2;
+    filter: hue-rotate(90deg) saturate(180%);
+    color: var(--pink);
+  }
+  50% {
+    opacity: 1;
+    filter: hue-rotate(315deg) saturate(140%);
+    color: var(--mauve);
+  }
+  60% {
+    opacity: 0.4;
+    filter: hue-rotate(135deg) saturate(160%);
+    color: var(--peach);
+  }
+  70% {
+    opacity: 0.9;
+    filter: hue-rotate(225deg) saturate(110%);
+    color: var(--maroon);
+  }
+  80% {
+    opacity: 0.1;
+    filter: hue-rotate(60deg) saturate(190%);
+    color: var(--teal);
+  }
+  90% {
+    opacity: 0.7;
+    filter: hue-rotate(300deg) saturate(130%);
+    color: var(--blue);
+  }
+  100% {
+    opacity: 1;
+    filter: hue-rotate(0deg) saturate(100%);
+    color: var(--red);
+  }
+}
