@@ -21,6 +21,10 @@
 @import "https://cdn.jsdelivr.net/npm/@webtui/css@0.0.5/dist/components/button.css";
 @import "https://cdn.jsdelivr.net/npm/@webtui/css@0.0.5/dist/components/typography.css";
 
+[data-webtui-theme|=catppuccin] div.button-container p a {
+        color: var(--crust);
+  text-decoration: none;
+}
 
 body {
   display: none;
@@ -44,30 +48,6 @@ footer .footer {
 header .header[data-block-status="loaded"],
 footer .footer[data-block-status="loaded"] {
   visibility: visible;
-}
-
-/* buttons */
-a.button:any-link,
-button {
-  box-sizing: border-box;
-  display: inline-block;
-  max-width: 100%;
-  margin: 12px 0;
-  border: 2px solid transparent;
-  border-radius: 2.4em;
-  padding: 0.5em 1.2em;
-  font-family: var(--body-font-family);
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.25;
-  text-align: center;
-  text-decoration: none;
-  background-color: var(--link-color);
-  color: var(--background-color);
-  cursor: pointer;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 
@@ -99,11 +79,6 @@ main img {
 .icon img {
   height: 100%;
   width: 100%;
-}
-
-p.button-container p a[is="button"] {
-  text-decoration: none;
-  color: var(--mantle);
 }
 
 /* Button container inline display */
