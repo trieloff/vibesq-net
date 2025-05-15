@@ -43,8 +43,8 @@
   transition: opacity 0.2s ease;
 }
 
-/* Cyberpunk glitch animation when status is in the last child container */
-:last-child > .status {
+/* Cyberpunk glitch animation when status is in the last status div */
+.status:last-of-type {
   animation: cyberpunk-glitch 0.8s infinite;
 }
 
