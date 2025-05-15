@@ -1,0 +1,8 @@
+div.status {
+  font-size: 50%;
+}
+
+div.status h2 {
+  font-size: 1rem;
+  text-transform: uppercase;
+}
