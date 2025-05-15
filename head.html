@@ -2,3 +2,35 @@
 <script src="/scripts/aem.js" type="module"></script>
 <script src="/scripts/scripts.js" type="module"></script>
 <link rel="stylesheet" href="/styles/styles.css"/>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <filter id="cp" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix"
+        values="0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0 0 0 1 0" result="g" />
+      <feTurbulence type="fractalNoise" baseFrequency="2.8" numOctaves="1" seed="42" result="n" />
+      <feColorMatrix in="n" type="saturate" values="0" result="n2" />
+      <feComposite in="g" in2="n2" operator="arithmetic" k1="1" k2="0.4" k3="0" k4="0" result="gn" />
+      <feComponentTransfer in="gn" result="d">
+        <feFuncR type="discrete" tableValues="0.106 0.561 1 0" />
+        <feFuncG type="discrete" tableValues="0.024 0 0 1" />
+        <feFuncB type="discrete" tableValues="0.192 1 0.435 1" />
+      </feComponentTransfer>
+      <feComposite in="SourceGraphic" in2="d" operator="arithmetic" k1="0" k2="0.5" k3="0.5" k4="0" />
+    </filter>
+
+    <filter id="bc" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix"
+        values="0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0 0 0 1 0" result="g" />
+      <feTurbulence type="fractalNoise" baseFrequency="1.5" numOctaves="1" seed="5" result="n" />
+      <feColorMatrix in="n" type="saturate" values="0" result="n2" />
+      <feComposite in="g" in2="n2" operator="arithmetic" k1="1" k2="0.2" k3="0" k4="0" result="gn" />
+      <feComponentTransfer in="gn" result="p">
+        <feFuncR type="discrete" tableValues="0.961 0.848 0" />
+        <feFuncG type="discrete" tableValues="0.941 0.796 0.769" />
+        <feFuncB type="discrete" tableValues="0.914 0.749 0.851" />
+      </feComponentTransfer>
+      <feComposite in="SourceGraphic" in2="p" operator="arithmetic" k1="0" k2="0.7" k3="0.3" k4="0" />
+    </filter>
+  </defs>
+</svg>

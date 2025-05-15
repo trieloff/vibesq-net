@@ -123,12 +123,12 @@ main img {
 
 /* default: neon cyber-punk */
 main img {
-  filter: url("/styles/cyberpunk.svg#cp");
-  -webkit-filter: url("/styles/cyberpunk.svg#cp"); /* Safari/WebKit */
+  filter: url("#cp");
+  -webkit-filter: url("#cp"); /* Safari/WebKit */
 }
 
 /* latte theme: beigecore variant */
 [data-webtui-theme="catppuccin-latte"] main img {
-  filter: url("/styles/beigecore.svg#bc");
-  -webkit-filter: url("/styles/beigecore.svg#bc");
+  filter: url("#bc");
+  -webkit-filter: url("#bc");
 }
