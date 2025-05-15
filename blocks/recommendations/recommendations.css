@@ -8,6 +8,7 @@
   margin: 0;
   padding: 20px;
   list-style-type: none;
+  position: relative;
 }
 
 /* Hide all list items by default */
@@ -20,19 +21,17 @@
   position: absolute;
   left: 20px;
   right: 20px;
-  transition: opacity 0.3s ease-in-out;
+  top: 20px;
   
   /* Default animation properties for all items */
   animation: message-fade 30s infinite;
   /* Will be set by JS: animation-delay: var(--delay, 0s); */
 }
 
-/* Animation keyframes - visible for 1s out of 30s cycle */
+/* Animation keyframes - each message is visible for exactly 1s out of 30s cycle */
 @keyframes message-fade {
-  0%, 2.9%, 6.7%, 100% {
-    opacity: 0;
-  }
-  3.3%, 6.4% {
-    opacity: 1;
-  }
+  0% { opacity: 0; }
+  3% { opacity: 1; }
+  6% { opacity: 0; }
+  100% { opacity: 0; }
 }

@@ -108,21 +108,52 @@ export default function decorate(block) {
     messageList.innerHTML = '';
     listItems.forEach(item => messageList.appendChild(item));
     
-    // Limit to max 30 messages - but only after shuffling
-    if (listItems.length > 30) {
-      // Hide messages beyond the first 30
-      for (let i = 30; i < listItems.length; i++) {
+    // Use maximum of 30 messages for animation
+    const MAX_MESSAGES = 30;
+    const totalMessages = Math.min(listItems.length, MAX_MESSAGES);
+    
+    // Hide messages beyond the first MAX_MESSAGES
+    if (listItems.length > MAX_MESSAGES) {
+      for (let i = MAX_MESSAGES; i < listItems.length; i++) {
         listItems[i].style.display = 'none';
       }
-      // Only animate the first 30
-      listItems = listItems.slice(0, 30);
+      listItems = listItems.slice(0, MAX_MESSAGES);
     }
     
-    // Assign animation delays to each list item (sequential after shuffle)
+    // Calculate precise delay for each message
+    const totalCycle = 30; // 30 second cycle
+    const visibleDuration = 1; // Each message visible for 1 second
+    
+    // Calculate the exact delay time for each message to ensure continuous display
+    // Each message should start exactly when the previous message ends its visibility
     listItems.forEach((item, index) => {
-      // Set the delay using CSS custom property and regular animation-delay
-      item.style.setProperty('--delay', `${index}s`);
-      item.style.animationDelay = `var(--delay)`;
+      // Calculate the exact position in the cycle
+      const delay = (index * visibleDuration) % totalCycle;
+      
+      // Set both animation-delay and a data attribute for debugging
+      item.style.animationDelay = `${delay}s`;
+      item.dataset.delay = delay;
+      
+      // Force each message to appear for exactly 1 second
+      // We'll create a custom animation for each item to ensure precise timing
+      const animationName = `message-fade-${index}`;
+      
+      // Calculate exact percentages for this message's animation
+      const startVisible = (delay / totalCycle) * 100;
+      const endVisible = ((delay + visibleDuration) / totalCycle) * 100;
+      
+      // Create dynamic keyframe animation
+      const styleSheet = document.createElement('style');
+      styleSheet.textContent = `
+        @keyframes ${animationName} {
+          0%, ${startVisible}%, ${endVisible}%, 100% { opacity: 0; }
+          ${startVisible + 0.1}%, ${endVisible - 0.1}% { opacity: 1; }
+        }
+      `;
+      document.head.appendChild(styleSheet);
+      
+      // Apply this custom animation to the item
+      item.style.animation = `${animationName} ${totalCycle}s infinite`;
     });
   }
   
