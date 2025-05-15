@@ -25,6 +25,7 @@
   
   /* Default animation properties for all items */
   animation: message-fade 30s infinite;
+
   /* Will be set by JS: animation-delay: var(--delay, 0s); */
 }
 

@@ -1,3 +1,11 @@
+import {
+  decorateMain,
+} from '../../scripts/scripts.js';
+
+import {
+  loadSections,
+} from '../../scripts/aem.js';
+
 /**
  * Shuffles an array using the Fisher-Yates algorithm
  * @param {Array} array The array to shuffle
@@ -5,7 +13,7 @@
  */
 function shuffleArray(array) {
   const newArray = [...array];
-  for (let i = newArray.length - 1; i > 0; i--) {
+  for (let i = newArray.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
     [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
   }
@@ -22,7 +30,7 @@ function requestGeolocation() {
       reject(new Error('Geolocation not supported'));
       return;
     }
-    
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         resolve(position);
@@ -30,7 +38,7 @@ function requestGeolocation() {
       (error) => {
         reject(error);
       },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
     );
   });
 }
@@ -47,30 +55,32 @@ async function streamInto(targetElement, url) {
     if (!res.ok) {
       throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
     }
-    
+
     // Create a container for the streamed content
     const streamContainer = document.createElement('div');
     streamContainer.className = 'streamed-recommendations';
-    
+
     // Insert the container before the target element
     targetElement.parentNode.insertBefore(streamContainer, targetElement);
-    
+
     const decoder = new TextDecoder();
-    
+
     // Check if ReadableStream is supported and response body is available
     if (res.body) {
       const reader = res.body.getReader();
-      
-      // Read the stream
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        
-        // Decode and insert the chunk
-        const chunk = decoder.decode(value, { stream: true });
-        streamContainer.insertAdjacentHTML('beforeend', chunk);
-      }
-      
+
+      // Process all chunks sequentially
+      let result;
+      do {
+        // eslint-disable-next-line no-await-in-loop
+        result = await reader.read();
+        if (!result.done) {
+          // Decode and insert the chunk
+          const chunkText = decoder.decode(result.value, { stream: true });
+          streamContainer.insertAdjacentHTML('beforeend', chunkText);
+        }
+      } while (!result.done);
+
       // Flush the decoder
       streamContainer.insertAdjacentHTML('beforeend', decoder.decode());
     } else {
@@ -78,9 +88,10 @@ async function streamInto(targetElement, url) {
       const text = await res.text();
       streamContainer.insertAdjacentHTML('beforeend', text);
     }
-    
+
     return streamContainer;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error streaming content:', error);
     throw error;
   }
@@ -93,55 +104,55 @@ async function streamInto(targetElement, url) {
 export default function decorate(block) {
   // Add loading class to activate the CSS animations
   block.classList.add('loading');
-  
+
   // Find the list of messages
   const messageList = block.querySelector('ol, ul');
-  
+
   if (messageList) {
     // Get all list items
     let listItems = [...messageList.querySelectorAll('li')];
-    
+
     // Shuffle all messages first
     listItems = shuffleArray(listItems);
-    
+
     // Create new list from shuffled items
     messageList.innerHTML = '';
-    listItems.forEach(item => messageList.appendChild(item));
-    
+    listItems.forEach((item) => messageList.appendChild(item));
+
     // Use maximum of 30 messages for animation
     const MAX_MESSAGES = 30;
-    const totalMessages = Math.min(listItems.length, MAX_MESSAGES);
-    
+    // We've already calculated the max messages in MAX_MESSAGES
+
     // Hide messages beyond the first MAX_MESSAGES
     if (listItems.length > MAX_MESSAGES) {
-      for (let i = MAX_MESSAGES; i < listItems.length; i++) {
+      for (let i = MAX_MESSAGES; i < listItems.length; i += 1) {
         listItems[i].style.display = 'none';
       }
       listItems = listItems.slice(0, MAX_MESSAGES);
     }
-    
+
     // Calculate precise delay for each message
     const totalCycle = 30; // 30 second cycle
     const visibleDuration = 1; // Each message visible for 1 second
-    
+
     // Calculate the exact delay time for each message to ensure continuous display
     // Each message should start exactly when the previous message ends its visibility
     listItems.forEach((item, index) => {
       // Calculate the exact position in the cycle
       const delay = (index * visibleDuration) % totalCycle;
-      
+
       // Set both animation-delay and a data attribute for debugging
       item.style.animationDelay = `${delay}s`;
       item.dataset.delay = delay;
-      
+
       // Force each message to appear for exactly 1 second
       // We'll create a custom animation for each item to ensure precise timing
       const animationName = `message-fade-${index}`;
-      
+
       // Calculate exact percentages for this message's animation
       const startVisible = (delay / totalCycle) * 100;
       const endVisible = ((delay + visibleDuration) / totalCycle) * 100;
-      
+
       // Create dynamic keyframe animation
       const styleSheet = document.createElement('style');
       styleSheet.textContent = `
@@ -151,37 +162,41 @@ export default function decorate(block) {
         }
       `;
       document.head.appendChild(styleSheet);
-      
+
       // Apply this custom animation to the item
       item.style.animation = `${animationName} ${totalCycle}s infinite`;
     });
   }
-  
+
   // Request geolocation access immediately
   requestGeolocation()
     .then(async (position) => {
-      console.log('Location access granted:', position);
-      
+      // Location access granted, proceed with recommendations
+
       // Get the latitude and longitude
       const { latitude, longitude } = position.coords;
-      
+
       // Construct the URL with coordinates
       const url = `/recommendations.html?lat=${latitude}&lon=${longitude}`;
-      
+
       try {
         // Stream the content into the page
-        await streamInto(block.parentNode, url);
-        
+        const streamContainer = await streamInto(block.parentNode, url);
+
+        // Decorate the streamed content
+        decorateMain(streamContainer);
+        await loadSections(streamContainer);
+
         // After successful streaming, remove the loading animation
         setTimeout(() => {
           block.style.display = 'none';
         }, 2000); // Keep the loading animation visible for a moment
       } catch (error) {
-        console.error('Failed to stream recommendations:', error);
+        // Failed to stream recommendations, handle error
       }
     })
-    .catch((error) => {
-      console.log('Location access denied:', error.message);
+    .catch(() => {
+      // Location access denied, redirect to home
       // Redirect to home page if location access is denied
       window.location.href = '/';
     });
