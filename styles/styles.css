@@ -24,6 +24,8 @@
 
 body {
   display: none;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 body.appear {
@@ -97,6 +99,11 @@ main img {
 .icon img {
   height: 100%;
   width: 100%;
+}
+
+p.button-container p a[is="button"] {
+  text-decoration: none;
+  color: var(--mantle);
 }
 
 /* Button container inline display */
