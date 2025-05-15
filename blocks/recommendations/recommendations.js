@@ -57,11 +57,12 @@ async function streamInto(targetElement, url) {
     }
 
     // Create a container for the streamed content
-    const streamContainer = document.createElement('div');
-    streamContainer.className = 'streamed-recommendations';
+    const streamContainer = document.createElement('section');
+    streamContainer.classList.add('streamed-recommendations');
+    streamContainer.classList.add('pseudo-main');
 
     // Insert the container before the target element
-    targetElement.parentNode.insertBefore(streamContainer, targetElement);
+    document.querySelector('main').after(streamContainer);
 
     const decoder = new TextDecoder();
 
