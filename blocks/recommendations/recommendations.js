@@ -99,15 +99,30 @@ export default function decorate(block) {
   
   if (messageList) {
     // Get all list items
-    const listItems = [...messageList.querySelectorAll('li')];
+    let listItems = [...messageList.querySelectorAll('li')];
     
-    // Create a shuffled array of delays (0 to listItems.length - 1)
-    const delays = shuffleArray([...Array(listItems.length).keys()]);
+    // Shuffle all messages first
+    listItems = shuffleArray(listItems);
     
-    // Assign shuffled animation delays to each list item
+    // Create new list from shuffled items
+    messageList.innerHTML = '';
+    listItems.forEach(item => messageList.appendChild(item));
+    
+    // Limit to max 30 messages - but only after shuffling
+    if (listItems.length > 30) {
+      // Hide messages beyond the first 30
+      for (let i = 30; i < listItems.length; i++) {
+        listItems[i].style.display = 'none';
+      }
+      // Only animate the first 30
+      listItems = listItems.slice(0, 30);
+    }
+    
+    // Assign animation delays to each list item (sequential after shuffle)
     listItems.forEach((item, index) => {
-      // Assign a random delay from our shuffled array
-      item.style.animationDelay = `${delays[index]}s`;
+      // Set the delay using CSS custom property and regular animation-delay
+      item.style.setProperty('--delay', `${index}s`);
+      item.style.animationDelay = `var(--delay)`;
     });
   }
   
