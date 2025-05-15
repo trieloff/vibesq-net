@@ -92,3 +92,4 @@ The site implements a progressive loading approach:
 
 - aem.js should never be modified
 - always add files to git individually
+- do not commit when the human has not verified that it works. Ask occasionally to commit the work in progress
