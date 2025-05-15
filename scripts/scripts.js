@@ -54,17 +54,69 @@ function buildAutoBlocks(main) {
 }
 
 /**
+ * Custom button decoration for WebTUI
+ * @param {Element} element The element to decorate
+ */
+function decorateWebTUIButtons(element) {
+  element.querySelectorAll('a').forEach((a) => {
+    a.title = a.title || a.textContent;
+    if (a.href !== a.textContent) {
+      const up = a.parentElement;
+      const twoup = a.parentElement.parentElement;
+      if (!a.querySelector('img')) {
+        if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
+          // Convert to button with WebTUI attributes
+          a.setAttribute('is-', 'button');
+          a.setAttribute('variant-', 'sky');
+          up.classList.add('button-container');
+        }
+        if (
+          up.childNodes.length === 1
+          && up.tagName === 'STRONG'
+          && twoup.childNodes.length === 1
+          && twoup.tagName === 'P'
+        ) {
+          // Primary button
+          a.setAttribute('is-', 'button');
+          a.setAttribute('variant-', 'maroon');
+          twoup.classList.add('button-container');
+        }
+        if (
+          up.childNodes.length === 1
+          && up.tagName === 'EM'
+          && twoup.childNodes.length === 1
+          && twoup.tagName === 'P'
+        ) {
+          // Secondary button
+          a.setAttribute('is-', 'button');
+          a.setAttribute('variant-', 'peach');
+          twoup.classList.add('button-container');
+        }
+      }
+    }
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
-  // hopefully forward compatible button decoration
-  decorateButtons(main);
+  // Use custom WebTUI button decoration
+  decorateWebTUIButtons(main);
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  // Add box attribute to all sections
+  main.querySelectorAll('.section').forEach((section) => {
+    section.setAttribute('box-', 'square');
+  });
   decorateBlocks(main);
+  // Add box attribute to all blocks
+  main.querySelectorAll('.block').forEach((block) => {
+    block.setAttribute('box-', 'round');
+  });
 }
 
 /**
@@ -73,6 +125,24 @@ export function decorateMain(main) {
  */
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
+  // Enable catppuccin theme based on OS settings
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.documentElement.setAttribute('data-webtui-theme', 'catppuccin-mocha');
+  } else {
+    document.documentElement.setAttribute('data-webtui-theme', 'catppuccin-latte');
+  }
+  
+  // Listen for theme changes
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (e.matches) {
+        document.documentElement.setAttribute('data-webtui-theme', 'catppuccin-mocha');
+      } else {
+        document.documentElement.setAttribute('data-webtui-theme', 'catppuccin-latte');
+      }
+    });
+  }
+  
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
@@ -92,6 +162,33 @@ async function loadEager(doc) {
 }
 
 /**
+ * Adds a home button at the bottom of non-home pages
+ * @param {Element} main The main element
+ */
+function addHomeButton(main) {
+  // Only add button if not on home page
+  if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
+    const homeSection = document.createElement('div');
+    homeSection.classList.add('section');
+    
+    const homeDiv = document.createElement('div');
+    const homeP = document.createElement('p');
+    const homeLink = document.createElement('a');
+    
+    homeLink.href = '/';
+    homeLink.textContent = '⏏ Eject Eject Eject';
+    homeLink.setAttribute('is-', 'button');
+    homeLink.setAttribute('variant-', 'sky');
+    homeLink.setAttribute('box-', 'round');
+    
+    homeP.appendChild(homeLink);
+    homeDiv.appendChild(homeP);
+    homeSection.appendChild(homeDiv);
+    main.appendChild(homeSection);
+  }
+}
+
+/**
  * Loads everything that doesn't need to be delayed.
  * @param {Element} doc The container element
  */
@@ -105,6 +202,9 @@ async function loadLazy(doc) {
 
   loadHeader(doc.querySelector('header'));
   loadFooter(doc.querySelector('footer'));
+  
+  // Add home button for non-home pages
+  addHomeButton(main);
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();

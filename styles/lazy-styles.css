@@ -1,1 +1,25 @@
 /* add global styles that can be loaded post LCP here */
+@import "https://cdn.jsdelivr.net/npm/@webtui/plugin-nf@latest/dist/index.css";
+@import "https://cdn.jsdelivr.net/npm/@webtui/theme-catppuccin@latest/dist/index.css";
+@import "https://cdn.jsdelivr.net/npm/@webtui/css@0.0.5/dist/components/checkbox.css";
+
+@layer base {
+  :root {
+    --font-family: Menlo, Monaco, monospace, "Symbols Nerd Font";
+    --line-height: 2;
+  }
+  
+  /* Double font size for screens wider than 1400px */
+  @media (min-width: 1400px) {
+    :root {
+      --font-size: 32px;
+    }
+  }
+}
+
+@layer components {
+  [is-="button"] {
+    height: 2lh;
+    margin: 1lh 0;
+  }
+}

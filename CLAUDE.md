@@ -87,3 +87,8 @@ The site implements a progressive loading approach:
 - Follow existing code structure and naming conventions
 - Use ESLint and Stylelint to ensure code quality (`npm run lint`)
 - Follow the PR process outlined in CONTRIBUTING.md
+
+## Memories
+
+- aem.js should never be modified
+- always add files to git individually
