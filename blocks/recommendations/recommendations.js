@@ -13,6 +13,29 @@ function shuffleArray(array) {
 }
 
 /**
+ * Request geolocation access
+ * @returns {Promise} Promise that resolves when location is granted, rejects when denied
+ */
+function requestGeolocation() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      reject(new Error('Geolocation not supported'));
+      return;
+    }
+    
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        resolve(position);
+      },
+      (error) => {
+        reject(error);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  });
+}
+
+/**
  * Decorates the recommendations block
  * @param {Element} block The recommendations block element
  */
@@ -36,4 +59,15 @@ export default function decorate(block) {
       item.style.animationDelay = `${delays[index]}s`;
     });
   }
+  
+  // Request geolocation access immediately
+  requestGeolocation()
+    .then((position) => {
+      console.log('Location access granted:', position);
+    })
+    .catch((error) => {
+      console.log('Location access denied:', error.message);
+      // Redirect to home page if location access is denied
+      window.location.href = '/';
+    });
 }
