@@ -134,3 +134,15 @@ main strong {
 main em {
   color: var(--pink);
 }
+
+main img {
+  width: 100%;
+}
+
+main img {
+  filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='cp' color-interpolation-filters='sRGB'><feColorMatrix type='matrix' values='0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0 0 0 1 0' result='g'/><feTurbulence type='fractalNoise' baseFrequency='2.8' numOctaves='1' seed='42' result='n'/><feColorMatrix in='n' type='saturate' values='0' result='n2'/><feComposite in='g' in2='n2' operator='arithmetic' k1='1' k2='0.4' k3='0' k4='0' result='gn'/><feComponentTransfer in='gn' result='d'><feFuncR type='discrete' tableValues='0.106 0.561 1 0'/><feFuncG type='discrete' tableValues='0.024 0 0 1'/><feFuncB type='discrete' tableValues='0.192 1 0.435 1'/></feComponentTransfer><feComposite in='SourceGraphic' in2='d' operator='arithmetic' k1='0' k2='0.5' k3='0.5' k4='0'/></filter></svg>#cp");
+}
+
+[data-webtui-theme="catppuccin-latte"] main img {
+  filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='cg' color-interpolation-filters='sRGB'><feTurbulence type='fractalNoise' baseFrequency='6' numOctaves='2' seed='99' result='t'/><feDisplacementMap in='SourceGraphic' in2='t' scale='8' xChannelSelector='R' yChannelSelector='G' result='d'/><feColorMatrix in='d' type='matrix' values='0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0 0 0 1 0' result='g'/><feComposite in='g' in2='t' operator='arithmetic' k1='1' k2='0.5' k3='0' k4='0' result='gn'/><feComponentTransfer in='gn'><feFuncR type='discrete' tableValues='0 0.25 0 0'/><feFuncG type='discrete' tableValues='0 0 1 1'/><feFuncB type='discrete' tableValues='0 1 0.68 1'/></feComponentTransfer><feComposite in='d' in2='gn' operator='arithmetic' k1='0' k2='0.3' k3='0.7' k4='0'/></filter></svg>#cg");
+}
