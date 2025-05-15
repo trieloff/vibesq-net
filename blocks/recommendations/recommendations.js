@@ -52,17 +52,18 @@ function requestGeolocation() {
 async function streamInto(targetElement, url) {
   try {
     const res = await fetch(url);
-    if (!res.ok) {
+    // we ignore the error on localhost, so that we can test the injection cheaply
+    if (!res.ok && window.location.hostname !== 'localhost') {
       throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
     }
 
     // Create a container for the streamed content
-    const streamContainer = document.createElement('section');
+    const streamContainer = document.createElement('main');
     streamContainer.classList.add('streamed-recommendations');
     streamContainer.classList.add('pseudo-main');
 
     // Insert the container before the target element
-    document.querySelector('main').after(streamContainer);
+    targetElement.parentNode.insertBefore(streamContainer, targetElement);
 
     const decoder = new TextDecoder();
 
@@ -79,6 +80,7 @@ async function streamInto(targetElement, url) {
           // Decode and insert the chunk
           const chunkText = decoder.decode(result.value, { stream: true });
           streamContainer.insertAdjacentHTML('beforeend', chunkText);
+
           decorateMain(streamContainer);
           // eslint-disable-next-line no-await-in-loop
           await loadSections(streamContainer);
