@@ -1,362 +1,323 @@
-<div>
 
-  <div class="status">
-    <h2>Starting recommendation stream...</h2>
-    <p>Location: 52.395442275815135, 13.118892087220198</p>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibeSquare Recommendations</title>
+  <style>
+    /* Status update styling */
+    .status {
+      padding: 8px 12px;
+      margin: 8px 0;
+      border-left: 4px solid #ccc;
+      background-color: #f8f9fa;
+      font-size: 14px;
+      color: #555;
+    }
+    .status h2 {
+      margin: 0;
+      font-size: 16px;
+    }
+    .status p {
+      margin: 6px 0;
+    }
+    
+    code {
+      background-color: #f1f1f1;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+<main>
 
-  <div class="info">
-    <p>Generating recommendations for coordinates: 52.395442275815135, 13.118892087220198</p>
-    <p>This may take up to 30 seconds...</p>
-  </div>
+        <div class="status">
+          <h2>Starting</h2>
+          <p>Location: 52.395444171910626, 13.119086788233039</p>
+        </div>
+      
+        <div class="status">
+          <h2>Generating</h2>
+          <p>Finding recommendations for coordinates: 52.395444171910626, 13.119086788233039. This may take up to 30 seconds...</p>
+        </div>
+      
+          <div class="status">
+            <h2>System</h2>
+            <p>Fetching prompt template...</p>
+          </div>
+        
+          <div class="status">
+            <h2>System</h2>
+            <p>Prompt template loaded successfully.</p>
+          </div>
+        
+        <div class="status">
+          <h2>Tools</h2>
+          <p>Available tools: 4 found</p>
+          <ul>
+            <li><code>fetchHistory</code></li><li><code>fetchTastes</code></li><li><code>searchPlaces</code></li><li><code>writeResponse</code></li>
+          </ul>
+        </div>
+      
+        <div class="status-update">
+          <p><span class="status-badge">Connecting to AI...</span> Sending initial request to AI service</p>
+        </div>
+      
+              <div class="status-update">
+                <p><span class="status-badge">AI Responded</span> Processing 1 tool call(s)...</p>
+              </div>
+            
+          <div class="status">
+            <h2>Tool: <code>fetchHistory</code></h2>
+            <p>Executing...</p>
+          </div>
+        
+                <div class="status-update">
+                  <p><span class="status-badge">Tools Executed</span> 1 succeeded, 0 failed</p>
+                </div>
+              
+                  <div class="status-update">
+                    <p><span class="status-badge">Connecting to AI...</span> Sending follow-up request with tool results</p>
+                  </div>
+                
+              <div class="status-update">
+                <p><span class="status-badge">AI Responded</span> Processing 1 tool call(s)...</p>
+              </div>
+            
+          <div class="status">
+            <h2>Tool: <code>fetchTastes</code></h2>
+            <p>Executing...</p>
+          </div>
+        
+                <div class="status-update">
+                  <p><span class="status-badge">Tools Executed</span> 1 succeeded, 0 failed</p>
+                </div>
+              
+                  <div class="status-update">
+                    <p><span class="status-badge">Connecting to AI...</span> Sending follow-up request with tool results</p>
+                  </div>
+                
+              <div class="status-update">
+                <p><span class="status-badge">AI Responded</span> Processing 1 tool call(s)...</p>
+              </div>
+            
+          <div class="status">
+            <h2>Tool: <code>searchPlaces</code></h2>
+            <p>Executing...</p>
+          </div>
+        
+                <div class="status-update">
+                  <p><span class="status-badge">Tools Executed</span> 1 succeeded, 0 failed</p>
+                </div>
+              
+                  <div class="status-update">
+                    <p><span class="status-badge">Connecting to AI...</span> Sending follow-up request with tool results</p>
+                  </div>
+                
+              <div class="status-update">
+                <p><span class="status-badge">AI Responded</span> Processing 1 tool call(s)...</p>
+              </div>
+            
+          <div class="status">
+            <h2>Tool: <code>writeResponse</code></h2>
+            <p>Executing...</p>
+          </div>
+        <h2>// OPERATIVE LOCATION ANALYSIS //</h2>
+<p>Current coordinates: <strong>52.395444, 13.119087</strong><br>
+Location identified as <em>Griebnitzsee</em>, Potsdam<br>
+Time: 16:42 hours // Date: 15 May 2025</p>
 
-  <div class="status">
-    <h2>System</h2>
-    <p>Fetching prompt template...</p>
-  </div>
+<p>Analysis of your movement patterns indicates <strong>courier operative</strong> status. Recent check-ins show transit through <em>Frankfurt</em> with multiple visits to <em>TechQuartier</em>, suggesting tech sector cover identity. Your pattern of rail station usage indicates you're actively moving between resistance cells.</p>
 
-  <div class="status">
-    <h2>System</h2>
-    <p>Prompt template loaded successfully.</p>
-  </div>
-
-  <div class="status">
-    <h2>Tools</h2>
-    <p>Available tools: 4 found</p>
-    <ul>
-      <li><code>fetchHistory</code></li>
-      <li><code>fetchTastes</code></li>
-      <li><code>searchPlaces</code></li>
-      <li><code>writeResponse</code></li>
-    </ul>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>Connecting to AI...</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>AI Responded</p>
-  </div>
-
-  <div class="status">
-    <h2>Tool</h2>
-    <p>Running Tool</p>
-  </div>
-
-  <div class="status">
-    <h2>Tools</h2>
-    <p>1 succeeded, 0 failed</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>Connecting to AI...</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>AI Responded</p>
-  </div>
-
-  <div class="status">
-    <h2>Tool</h2>
-    <p>Running Tool</p>
-  </div>
-
-  <div class="status">
-    <h2>Tools</h2>
-    <p>1 succeeded, 0 failed</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>Connecting to AI...</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>AI Responded</p>
-  </div>
-
-  <div class="status">
-    <h2>Tool</h2>
-    <p>Running Tool</p>
-  </div>
-
-  <div class="status">
-    <h2>Tools</h2>
-    <p>1 succeeded, 0 failed</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>Connecting to AI...</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>AI Responded</p>
-  </div>
-
-  <div class="status">
-    <h2>Tool</h2>
-    <p>Running Tool</p>
-  </div>
+<p>Scanning for suitable rendezvous points in proximity to your current position...</p>
+                <div class="status-update">
+                  <p><span class="status-badge">Tools Executed</span> 1 succeeded, 0 failed</p>
+                </div>
+              
+                  <div class="status-update">
+                    <p><span class="status-badge">Connecting to AI...</span> Sending follow-up request with tool results</p>
+                  </div>
+                
+              <div class="status-update">
+                <p><span class="status-badge">AI Responded</span> Processing 1 tool call(s)...</p>
+              </div>
+            
+          <div class="status">
+            <h2>Tool: <code>writeResponse</code></h2>
+            <p>Executing...</p>
+          </div>
+        <div class="recommendation place food">
   <div>
-    <h2>OPERATIVE BRIEFING: GRIEBNITZSEE SECTOR</h2>
-    <p>Current coordinates: 52.395442, 13.118892 | Time: 03:59 local | Operative status: <strong>COURIER</strong></p>
-    <p>Analysis indicates you're a courier operative moving between cells, with recent check-ins at Frankfurt and Berlin
-      transit hubs. Your cover identity shows preferences for diverse cuisines and cultural venues. The following
-      locations provide optimal cover while facilitating mission objectives.</p>
-  </div>
-  <div class="status">
-    <h2>Tools</h2>
-    <p>1 succeeded, 0 failed</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>Connecting to AI...</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>AI Responded</p>
-  </div>
-
-  <div class="status">
-    <h2>Tool</h2>
-    <p>Running Tool</p>
-  </div>
-  <div class="recommendations place food">
     <div>
-      <div>
-        <p>
-          <img loading="lazy" alt="Italian restaurant" src="https://picsum.photos/id/431/600/400" width="600" height="400">
-        </p>
-        <h4>Piazza Toscana</h4>
-        <p>A mere 2.5 klicks from your current position in <em>Griebnitzsee</em>, this Italian establishment offers
-          <strong>authentic pizza</strong> and <strong>Mediterranean cuisine</strong>. Based on your taste preferences
-          for pizza and Italian food, this venue provides excellent cover. The restaurant features <strong>outdoor
-            seating</strong> with good sightlines and multiple exit points, making it ideal for both sustenance and
-          surveillance. Their menu includes <strong>risotto</strong> varieties that align with your documented food
-          preferences.
-        </p>
-        <p><a
-            href="https://maps.apple.com/?address=Rudolf-Breitscheidstr.%20177,%2014482%20Potsdam,%20Germany&auid=5762867873953614532&ll=52.394762,13.122234&lsp=9902&q=Piazza%20Toscana">Resistance
-            Radar</a></p>
-        <p><a href="https://chatgpt.com?q=tell+me+more+about+Piazza+Toscana+in+Potsdam">Tell me more</a></p>
-      </div>
+      <p>
+        <img loading="lazy" alt="Italian restaurant" src="https://picsum.photos/id/292/600/400" width="600" height="400">
+      </p>
+      <h4>Piazza Toscana</h4>
+      <p>Just a short half klick walk from your location in <em>Griebnitzsee</em>, this Italian restaurant offers <strong>excellent pizza</strong> and <strong>Mediterranean cuisine</strong>. Based on your taste preferences for <strong>Japanese food</strong> and <strong>Italian cuisine</strong>, this venue provides ideal cover. The establishment features <strong>outdoor seating</strong> with good sightlines and multiple exit points. Located only 224 meters from your current position, it allows for quick extraction if needed while maintaining your foodie cover identity.</p>
+      <p><a href="https://maps.apple.com/place?address=Rudolf-Breitscheidstr.%20177,%2014482%20Potsdam,%20Germany&coordinate=52.394762,13.122234&name=Piazza%20Toscana">Resistance Radar</a></p>
+      <p><a href="https://chatgpt.com?q=tell+me+more+about+piazza+toscana+in+potsdam">Tell me more</a></p>
     </div>
   </div>
-  <div class="status">
-    <h2>Tools</h2>
-    <p>1 succeeded, 0 failed</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>Connecting to AI...</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>AI Responded</p>
-  </div>
-
-  <div class="status">
-    <h2>Tool</h2>
-    <p>Running Tool</p>
-  </div>
-  <div class="recommendation place food">
-    <div>
-      <div>
-        <p>
-          <img loading="lazy" alt="Café" src="https://picsum.photos/id/42/600/400" width="600" height="400">
-        </p>
-        <h4>Erfrischungshalle</h4>
-        <p>Located just 6 minutes walking distance in <em>Griebnitzsee East Quadrant</em>, this café-restaurant hybrid
-          offers <strong>excellent coffee</strong> and <strong>light meals</strong> perfect for maintaining your cover
-          identity. The venue is frequented by students and locals, providing natural camouflage for information
-          exchanges. Their <strong>outdoor seating area</strong> offers clear sightlines of approaching figures, while
-          the interior contains multiple alcoves suitable for discreet conversations. The <strong>changing seasonal
-            menu</strong> aligns with your documented preference for culinary variety.</p>
-        <p><a
-            href="https://maps.apple.com/?address=Rudolf-Breitscheid-Str.%20201,%2014482%20Potsdam,%20Germany&auid=4786314693664185267&ll=52.394905,13.128476&lsp=9902&q=Erfrischungshalle">Resistance
-            Radar</a></p>
-        <p><a href="https://chatgpt.com?q=tell+me+more+about+Erfrischungshalle+in+Potsdam">Tell me more</a></p>
-      </div>
-    </div>
-  </div>
-  <div class="status">
-    <h2>Tools</h2>
-    <p>1 succeeded, 0 failed</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>Connecting to AI...</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>AI Responded</p>
-  </div>
-
-  <div class="status">
-    <h2>Tool</h2>
-    <p>Running Tool</p>
-  </div>
-  <div class="recommendation place culture">
-    <div>
-      <div>
-        <p>
-          <img loading="lazy" alt="Cinema" src="https://picsum.photos/id/122/600/400" width="600" height="400">
-        </p>
-        <h4>Thalia Arthouse Kinos</h4>
-        <p>Positioned 1.6 klicks southwest in <em>Babelsberg District</em>, this independent cinema provides ideal cover
-          for a courier operative with your documented interest in <strong>indie movie theaters</strong>. The dimly lit
-          interior offers excellent cover for package exchanges, while the diverse international film selection
-          reinforces your cultural enthusiast cover identity. The venue draws minimal corporate surveillance and
-          features <strong>multiple exit routes</strong>. Your recent check-in at Orfeo's Erben in Frankfurt maintains
-          consistent pattern behavior for your cover identity.</p>
-        <p><a
-            href="https://maps.apple.com/?address=Rudolf-Breitscheid-Str.%2050,%2014482%20Potsdam,%20Germany&auid=12909983402249053774&ll=52.391829,13.09508&lsp=9902&q=Thalia%20Arthouse%20Kinos">Resistance
-            Radar</a></p>
-        <p><a href="https://chatgpt.com?q=tell+me+more+about+Thalia+Arthouse+Kinos+in+Potsdam">Tell me more</a></p>
-      </div>
-    </div>
-  </div>
-  <div class="status">
-    <h2>Tools</h2>
-    <p>1 succeeded, 0 failed</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>Connecting to AI...</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>AI Responded</p>
-  </div>
-
-  <div class="status">
-    <h2>Tool</h2>
-    <p>Running Tool</p>
-  </div>
-  <div class="recommendation place food">
-    <div>
-      <div>
-        <p>
-          <img loading="lazy" alt="Café bar" src="https://picsum.photos/id/163/600/400" width="600" height="400">
-        </p>
-        <h4>Café KELLERMANN</h4>
-        <p>Situated 1.8 klicks southwest in <em>Historic Babelsberg</em>, this multi-purpose venue combines a
-          <strong>café</strong>, <strong>bar</strong>, and <strong>music venue</strong> – perfect for a courier
-          requiring extended observation time without arousing suspicion. Their <strong>vegan options</strong> align
-          with your documented food preferences, while the venue's popularity among locals provides excellent crowd
-          cover. The establishment's dual nature as both daytime café and evening music venue allows for flexible
-          meeting schedules. Their <strong>specialty coffee</strong> would maintain consistency with your Starbucks
-          check-ins while offering superior quality.
-        </p>
-        <p><a
-            href="https://maps.apple.com/?address=Rudolf-Breitscheid-Str.%2032,%2014482%20Potsdam,%20Germany&auid=18235400082968212947&ll=52.392141,13.092058&lsp=9902&q=Caf%C3%A9%20KELLERMANN">Resistance
-            Radar</a></p>
-        <p><a href="https://chatgpt.com?q=tell+me+more+about+Café+KELLERMANN+in+Potsdam">Tell me more</a></p>
-      </div>
-    </div>
-  </div>
-  <div class="status">
-    <h2>Tools</h2>
-    <p>1 succeeded, 0 failed</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>Connecting to AI...</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>AI Responded</p>
-  </div>
-
-  <div class="status">
-    <h2>Tool</h2>
-    <p>Running Tool</p>
-  </div>
-  <div class="essential">
-    <div>
-      <div>
-        <p>The Griebnitzsee you're currently stationed near isn't just any ordinary body of water. During the Cold War
-          era, this lake formed part of the <strong>Berlin Wall border zone</strong>, with the wall itself running
-          directly along its northern shore. The shore was heavily patrolled by <strong>East German border
-            guards</strong> and fitted with anti-vehicle trenches, patrol roads, and watchtowers. What appears today as
-          a peaceful recreational area was once a deadly <strong>no-man's land</strong> where escape attempts were met
-          with lethal force. The nearby Karl-Liebknecht-Stadion, just 1.6 klicks from your position, was used by East
-          German intelligence as a cover for monitoring West Berlin radio transmissions. Today, swimmers and kayakers
-          enjoy the lake's waters, completely unaware they're traversing what was once one of the most heavily
-          militarized and surveilled stretches of water in human history—a fitting metaphor for your own covert
-          operations in plain sight.</p>
-        <p><a href="https://en.wikipedia.org/wiki/Griebnitzsee">Resistance Almanac</a></p>
-        <p><a href="https://chatgpt.com?q=tell+me+more+about+the+history+of+Griebnitzsee+and+the+Berlin+Wall">Tell me
-            more</a></p>
-      </div>
-    </div>
-  </div>
-  <div class="status">
-    <h2>Tools</h2>
-    <p>1 succeeded, 0 failed</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>Connecting to AI...</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>AI Responded</p>
-  </div>
-
-  <div class="status">
-    <h2>Tool</h2>
-    <p>Running Tool</p>
-  </div>
-  <div>
-    <p><strong>OPERATIONAL NOTES:</strong></p>
-    <p>All recommended venues are within optimal range of your current position and provide suitable environments for
-      maintaining your courier cover identity. The Erfrischungshalle offers the closest extraction point (6 minutes),
-      while Piazza Toscana provides the best balance of crowd cover and quality nourishment.</p>
-    <p>Your recent check-in patterns at transit hubs, tech startups, and dining establishments suggest a business
-      traveler cover identity. Continue to maintain this pattern with occasional cultural venue visits to reinforce your
-      cover as a discerning traveler rather than a mere business operative.</p>
-    <p>Maintain vigilance. The Tyrell-Wallace presence in <em>Griebnitzsee</em> is minimal, but corporate surveillance
-      drones have been reported in the vicinity of the university campus.</p>
-    <p>Transmission complete. Rain-slicked streets await.</p>
-  </div>
-  <div class="status">
-    <h2>Tools</h2>
-    <p>1 succeeded, 0 failed</p>
-  </div>
-
-  <div class="status">
-    <h2>AI</h2>
-    <p>Connecting to AI...</p>
-  </div>
-
-  <div class="status">
-    <h2>Warning</h2>
-    <p>Reached maximum limit of 10 tool calls</p>
-  </div>
-
-  <div class="stop">
-    <p>Recommendations stream completed. <a href="/">Return to homepage</a></p>
-  </div>
-
 </div>
+                <div class="status-update">
+                  <p><span class="status-badge">Tools Executed</span> 1 succeeded, 0 failed</p>
+                </div>
+              
+                  <div class="status-update">
+                    <p><span class="status-badge">Connecting to AI...</span> Sending follow-up request with tool results</p>
+                  </div>
+                
+              <div class="status-update">
+                <p><span class="status-badge">AI Responded</span> Processing 1 tool call(s)...</p>
+              </div>
+            
+          <div class="status">
+            <h2>Tool: <code>writeResponse</code></h2>
+            <p>Executing...</p>
+          </div>
+        <div class="recommendation place food">
+  <div>
+    <div>
+      <p>
+        <img loading="lazy" alt="Bakery" src="https://picsum.photos/id/326/600/400" width="600" height="400">
+      </p>
+      <h4>Bäckerei und Konditorei Fahland</h4>
+      <p>Positioned just 204 meters from your current coordinates in <em>Griebnitzsee</em>, this local bakery serves as an excellent <strong>low-profile meeting point</strong>. The establishment offers <strong>freshly baked goods</strong> that align with your preference for <strong>quality nourishment</strong>. As a family-owned operation, it remains free of Tyrell-Wallace corporate influence. The steady flow of local patrons provides excellent cover for information exchanges, and its proximity to the S-Bahn station facilitates quick extraction routes.</p>
+      <p><a href="https://maps.apple.com/place?address=Rudolf-Breitscheid-Str.%20178,%2014482%20Potsdam,%20Germany&coordinate=52.39521,13.122147&name=Bäckerei%20und%20Konditorei%20Fahland">Resistance Radar</a></p>
+      <p><a href="https://chatgpt.com?q=tell+me+more+about+Bäckerei+und+Konditorei+Fahland+in+potsdam">Tell me more</a></p>
+    </div>
+  </div>
+</div>
+                <div class="status-update">
+                  <p><span class="status-badge">Tools Executed</span> 1 succeeded, 0 failed</p>
+                </div>
+              
+                  <div class="status-update">
+                    <p><span class="status-badge">Connecting to AI...</span> Sending follow-up request with tool results</p>
+                  </div>
+                
+              <div class="status-update">
+                <p><span class="status-badge">AI Responded</span> Processing 1 tool call(s)...</p>
+              </div>
+            
+          <div class="status">
+            <h2>Tool: <code>writeResponse</code></h2>
+            <p>Executing...</p>
+          </div>
+        <div class="recommendation place food">
+  <div>
+    <div>
+      <p>
+        <img loading="lazy" alt="Café" src="https://picsum.photos/id/30/600/400" width="600" height="400">
+      </p>
+      <h4>Erfrischungshalle</h4>
+      <p>Located 655 meters from your position in <em>Griebnitzsee</em>, this café provides <strong>excellent tactical positioning</strong> with its mix of students and locals. Your taste profile indicates preferences for <strong>quality coffee</strong> and <strong>casual dining</strong> which aligns perfectly with this establishment's offerings. The venue is managed by students, reducing risk of corporate surveillance. Intelligence suggests they accept digital payments but maintain <strong>no WiFi</strong>, limiting digital tracking. Their changing menu and outdoor seating options provide flexibility for extended observation or quick meetings.</p>
+      <p><a href="https://maps.apple.com/place?address=Rudolf-Breitscheid-Str.%20201,%2014482%20Potsdam,%20Germany&coordinate=52.394905,13.128476&name=Erfrischungshalle">Resistance Radar</a></p>
+      <p><a href="https://chatgpt.com?q=tell+me+more+about+erfrischungshalle+in+potsdam">Tell me more</a></p>
+    </div>
+  </div>
+</div>
+                <div class="status-update">
+                  <p><span class="status-badge">Tools Executed</span> 1 succeeded, 0 failed</p>
+                </div>
+              
+                  <div class="status-update">
+                    <p><span class="status-badge">Connecting to AI...</span> Sending follow-up request with tool results</p>
+                  </div>
+                
+              <div class="status-update">
+                <p><span class="status-badge">AI Responded</span> Processing 1 tool call(s)...</p>
+              </div>
+            
+          <div class="status">
+            <h2>Tool: <code>writeResponse</code></h2>
+            <p>Executing...</p>
+          </div>
+        <div class="recommendation place culture">
+  <div>
+    <div>
+      <p>
+        <img loading="lazy" alt="Cinema" src="https://picsum.photos/id/436/600/400" width="600" height="400">
+      </p>
+      <h4>Thalia Arthouse Kinos</h4>
+      <p>This independent cinema located 1.7 klicks from your position in <em>Babelsberg</em> provides excellent cover for your mission. Your profile indicates a preference for <strong>indie movie theaters</strong>, making this a natural destination that won't trigger surveillance algorithms. The venue offers <strong>limited digital footprint</strong> (no credit card payments) and the darkened screening rooms provide optimal conditions for secure exchanges. The cinema's diverse programming attracts a mix of patrons, allowing you to blend seamlessly while maintaining your cultural enthusiast cover.</p>
+      <p><a href="https://maps.apple.com/place?address=Rudolf-Breitscheid-Str.%2050,%2014482%20Potsdam,%20Germany&coordinate=52.391829,13.09508&name=Thalia%20Arthouse%20Kinos">Resistance Radar</a></p>
+      <p><a href="https://chatgpt.com?q=tell+me+more+about+thalia+arthouse+kinos+in+potsdam">Tell me more</a></p>
+    </div>
+  </div>
+</div>
+                <div class="status-update">
+                  <p><span class="status-badge">Tools Executed</span> 1 succeeded, 0 failed</p>
+                </div>
+              
+                  <div class="status-update">
+                    <p><span class="status-badge">Connecting to AI...</span> Sending follow-up request with tool results</p>
+                  </div>
+                
+              <div class="status-update">
+                <p><span class="status-badge">AI Responded</span> Processing 1 tool call(s)...</p>
+              </div>
+            
+          <div class="status">
+            <h2>Tool: <code>writeResponse</code></h2>
+            <p>Executing...</p>
+          </div>
+        <div class="essential">
+  <div>
+    <div>
+      <p>The <strong>Griebnitzsee</strong> area where you're currently positioned was once a critical <strong>Cold War border zone</strong> between East and West Berlin. The lake itself served as part of the physical barrier, with armed patrol boats monitoring for escape attempts. Today's peaceful waterfront conceals a network of <strong>abandoned underground bunkers</strong> that were once used for border guard operations. The University of Potsdam campus nearby was originally built as the <strong>Academy of Law and Administration</strong> for training East German government officials. When moving through the area, note that many seemingly innocent lakeside properties were once <strong>surveillance outposts</strong>, their foundations still containing decommissioned monitoring equipment—perfect for resistance communication drops when you know where to look.</p>
+      <p><a href="https://en.wikipedia.org/wiki/Griebnitzsee">Resistance Almanac</a></p>
+      <p><a href="https://chatgpt.com?q=tell+me+more+about+the+history+of+griebnitzsee">Tell me more</a></p>
+    </div>
+  </div>
+</div>
+                <div class="status-update">
+                  <p><span class="status-badge">Tools Executed</span> 1 succeeded, 0 failed</p>
+                </div>
+              
+                  <div class="status-update">
+                    <p><span class="status-badge">Connecting to AI...</span> Sending follow-up request with tool results</p>
+                  </div>
+                
+              <div class="status-update">
+                <p><span class="status-badge">AI Responded</span> Processing 1 tool call(s)...</p>
+              </div>
+            
+          <div class="status">
+            <h2>Tool: <code>writeResponse</code></h2>
+            <p>Executing...</p>
+          </div>
+        <h3>// OPERATIONAL SUMMARY //</h3>
+<p>Your courier status requires maintaining cover while facilitating information exchange. The recommended venues provide optimal balance of accessibility, tactical advantages, and alignment with your established pattern of tech-professional/foodie cover identity.</p>
+
+<p>Primary rendezvous recommendation: <strong>Piazza Toscana</strong> - closest proximity and highest tactical rating.</p>
+
+<p>Secondary options include the Fahland bakery for quick exchanges and Erfrischungshalle for longer surveillance operations.</p>
+
+<p>For extended cover operations, the Thalia cinema provides excellent conditions for secure meetings while reinforcing your documented interest in cultural venues.</p>
+
+<p>Maintain standard precautions. The resistance stands with you.</p>
+<p>// END TRANSMISSION //</p>
+                <div class="status-update">
+                  <p><span class="status-badge">Tools Executed</span> 1 succeeded, 0 failed</p>
+                </div>
+              
+                  <div class="status-update">
+                    <p><span class="status-badge">Connecting to AI...</span> Sending follow-up request with tool results</p>
+                  </div>
+                
+              <div class="status-update">
+                <p><span class="status-badge">Warning</span> Reached maximum limit of 10 tool calls</p>
+              </div>
+            
+        <div class="status">
+          <h2>Complete</h2>
+          <p>Recommendations stream completed. <a href="/">Return to homepage</a></p>
+        </div>
+      
+</main>
+</body>
+</html>
