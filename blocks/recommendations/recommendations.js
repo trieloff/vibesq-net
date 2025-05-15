@@ -78,6 +78,9 @@ async function streamInto(targetElement, url) {
           // Decode and insert the chunk
           const chunkText = decoder.decode(result.value, { stream: true });
           streamContainer.insertAdjacentHTML('beforeend', chunkText);
+          decorateMain(streamContainer);
+          // eslint-disable-next-line no-await-in-loop
+          await loadSections(streamContainer);
         }
       } while (!result.done);
 
@@ -181,11 +184,7 @@ export default function decorate(block) {
 
       try {
         // Stream the content into the page
-        const streamContainer = await streamInto(block.parentNode, url);
-
-        // Decorate the streamed content
-        decorateMain(streamContainer);
-        await loadSections(streamContainer);
+        await streamInto(block.parentNode, url);
 
         // After successful streaming, remove the loading animation
         setTimeout(() => {
