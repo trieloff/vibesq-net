@@ -204,72 +204,6 @@ async function streamInto(targetElement, url) {
  * @param {Element} block The recommendations block element
  */
 export default function decorate(block) {
-  // Add loading class to activate the CSS animations
-  block.classList.add('loading');
-
-  // Find the list of messages
-  const messageList = block.querySelector('ol, ul');
-
-  if (messageList) {
-    // Get all list items
-    let listItems = [...messageList.querySelectorAll('li')];
-
-    // Shuffle all messages first
-    listItems = shuffleArray(listItems);
-
-    // Create new list from shuffled items
-    messageList.innerHTML = '';
-    listItems.forEach((item) => messageList.appendChild(item));
-
-    // Use maximum of 30 messages for animation
-    const MAX_MESSAGES = 30;
-    // We've already calculated the max messages in MAX_MESSAGES
-
-    // Hide messages beyond the first MAX_MESSAGES
-    if (listItems.length > MAX_MESSAGES) {
-      for (let i = MAX_MESSAGES; i < listItems.length; i += 1) {
-        listItems[i].style.display = 'none';
-      }
-      listItems = listItems.slice(0, MAX_MESSAGES);
-    }
-
-    // Calculate precise delay for each message
-    const totalCycle = 30; // 30 second cycle
-    const visibleDuration = 1; // Each message visible for 1 second
-
-    // Calculate the exact delay time for each message to ensure continuous display
-    // Each message should start exactly when the previous message ends its visibility
-    listItems.forEach((item, index) => {
-      // Calculate the exact position in the cycle
-      const delay = (index * visibleDuration) % totalCycle;
-
-      // Set both animation-delay and a data attribute for debugging
-      item.style.animationDelay = `${delay}s`;
-      item.dataset.delay = delay;
-
-      // Force each message to appear for exactly 1 second
-      // We'll create a custom animation for each item to ensure precise timing
-      const animationName = `message-fade-${index}`;
-
-      // Calculate exact percentages for this message's animation
-      const startVisible = (delay / totalCycle) * 100;
-      const endVisible = ((delay + visibleDuration) / totalCycle) * 100;
-
-      // Create dynamic keyframe animation
-      const styleSheet = document.createElement('style');
-      styleSheet.textContent = `
-        @keyframes ${animationName} {
-          0%, ${startVisible}%, ${endVisible}%, 100% { opacity: 0; }
-          ${startVisible + 0.1}%, ${endVisible - 0.1}% { opacity: 1; }
-        }
-      `;
-      document.head.appendChild(styleSheet);
-
-      // Apply this custom animation to the item
-      item.style.animation = `${animationName} ${totalCycle}s infinite`;
-    });
-  }
-
   // Request geolocation access immediately
   requestGeolocation()
     .then(async (position) => {
@@ -294,11 +228,6 @@ export default function decorate(block) {
       try {
         // Stream the content into the page
         await streamInto(block.parentNode, url);
-
-        // After successful streaming, remove the loading animation
-        setTimeout(() => {
-          block.style.display = 'none';
-        }, 2000); // Keep the loading animation visible for a moment
       } catch (error) {
         // Failed to stream recommendations, handle error
       }
